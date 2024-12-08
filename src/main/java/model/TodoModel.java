@@ -1,21 +1,29 @@
 package model;
 
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class Todo {
+public class TodoModel {
+
+    @NotEmpty (message = "ID cannot be empty")
     @Size(max = 50, message = "Max length is 50 characters")
     private String id;
 
-    @Size(min = 10, max = 50)
+    @NotEmpty (message = "Name cannot be empty")
+    @Size(min = 10, max = 50, message = "size must be between 10 to 50 characters")
     private String name;
 
-    @Size(max = 250)
+    @Size(max = 255, message = "Description has to be shorter than 255 characters")
     private String description;
 
-    @FutureOrPresent
+    @FutureOrPresent (message = "Date has to be either in the future or the present")
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    @NotNull (message = "Please fill in field")
     private Date dueDate;
 
     private String priority;
@@ -26,20 +34,6 @@ public class Todo {
 
     private Date updatedAt;
 
-    public Todo() {
-
-    }
-
-    public Todo(String id, String name, String description, Date dueDate, String priority, String status, Date createdAt, Date updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
     public @Size(max = 50, message = "Max length is 50 characters") String getId() {
         return id;
@@ -117,5 +111,25 @@ public class Todo {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+
+    }
+
+    public TodoModel() {}
+
+    public TodoModel(@NotEmpty (message = "ID cannot be empty") @Size(max = 50, message = "Max length is 50 characters") String id,
+                     @NotEmpty (message = "Name cannot be empty") @Size(min = 10, max = 50, message = "size must be between 10 to 50 characters") String name,
+                     @Size(max = 255, message = "Description has to be shorter than 255 characters") String description,
+                     @FutureOrPresent (message = "Date has to be either in the future or the present") @DateTimeFormat (pattern = "yyyy-MM-dd") @NotNull (message = "Please fill in field")Date dueDate, String priorityLevel,
+                     String status,
+
+                     Date createdAt, Date updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priorityLevel;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

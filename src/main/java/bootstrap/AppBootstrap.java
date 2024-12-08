@@ -10,6 +10,7 @@ import service.ToDoService;
 
 @Component
 public class AppBootstrap implements CommandLineRunner {
+
     @Autowired
     private ToDoService todoService;
 
